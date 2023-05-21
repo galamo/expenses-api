@@ -5,6 +5,7 @@ const body = require("body-parser");
 const app = express();
 let i = 0;
 let j = 0;
+let s = 0;
 const data = [
   { date: new Date(), amount: 250, name: "Buy Books", category: "Other" },
   {
@@ -61,6 +62,20 @@ app.get("/years", (req, res) => {
     }, 1500);
   }
 });
+
+app.get("/categories", (req, res) => {
+  s++;
+  if (s % 3 === 0) {
+    setTimeout(() => {
+      return res.status(409).send("error");
+    }, 1500);
+  } else {
+    setTimeout(() => {
+      res.json(["Other", "Drinks", "Bills", "Finance"]);
+    }, 1500);
+  }
+});
+
 app.post("/expense", (req, res) => {
   data.push(req.body);
   res.send("Success");
