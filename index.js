@@ -4,6 +4,7 @@ const body = require("body-parser");
 
 const app = express();
 let i = 0;
+let j = 0;
 const data = [
   { date: new Date(), amount: 250, name: "Buy Books", category: "Other" },
   {
@@ -48,6 +49,18 @@ app.get("/expenses", (req, res) => {
   }
 });
 
+app.get("/years", (req, res) => {
+  j++;
+  if (j % 3 === 0) {
+    setTimeout(() => {
+      return res.status(409).send("error");
+    }, 1500);
+  } else {
+    setTimeout(() => {
+      res.json([2019, 2020, 2021, 2022, 2023, 2024, 2025]);
+    }, 1500);
+  }
+});
 app.post("/expense", (req, res) => {
   data.push(req.body);
   res.send("Success");
