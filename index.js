@@ -1,5 +1,7 @@
 const express = require("express");
 const cors = require("cors");
+const body = require("body-parser");
+
 const app = express();
 let i = 0;
 const data = [
@@ -29,7 +31,10 @@ const data = [
     category: "Other",
   },
 ];
+
 app.use(cors());
+app.use(body.json());
+
 app.get("/expenses", (req, res) => {
   i++;
   if (i % 4 === 0) {
@@ -41,6 +46,11 @@ app.get("/expenses", (req, res) => {
       res.json(data);
     }, 1500);
   }
+});
+
+app.post("/expense", (req, res) => {
+  data.push(req.body);
+  res.send("Success");
 });
 
 app.listen(3500, () => {
