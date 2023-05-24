@@ -104,6 +104,24 @@ app.post("/delete-expense", (req, res) => {
   res.json({ message: "deleted successfully" });
 });
 
+app.get("/expenses/stats", (req, res) => {
+  const chartYearsResult = data.reduce((chartDataObj, currentExpense) => {
+    const { date, amount } = currentExpense;
+    const year = new Date(date).getFullYear();
+    if (!chartDataObj[year]) {
+      chartDataObj[year] = Number(amount);
+    } else {
+      chartDataObj[year] = chartDataObj[year] + Number(amount);
+    }
+    return chartDataObj;
+  }, {});
+
+  const labels = Object.keys(chartYearsResult);
+  const d = Object.values(chartYearsResult);
+
+  res.json({ labels, data: d });
+});
+
 app.listen(3600, () => {
   console.log("Api is running");
 });
