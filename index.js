@@ -38,47 +38,60 @@ app.use(cors());
 app.use(body.json());
 
 app.get("/expenses", (req, res) => {
-  i++;
-  if (i % 4 === 0) {
-    setTimeout(() => {
-      return res.status(409).send("error");
-    }, 1500);
-  } else {
-    setTimeout(() => {
-      res.json(data);
-    }, 1500);
-  }
+  setTimeout(() => {
+    res.json(data);
+  }, 1500);
+  //   i++;
+  //   if (i % 4 === 0) {
+  //     setTimeout(() => {
+  //       return res.status(409).send("error");
+  //     }, 1500);
+  //   } else {
+  //     setTimeout(() => {
+  //       res.json(data);
+  //     }, 1500);
+  //   }
 });
 
 app.get("/years", (req, res) => {
-  j++;
-  if (j % 3 === 0) {
-    setTimeout(() => {
-      return res.status(409).send("error");
-    }, 500);
-  } else {
-    setTimeout(() => {
-      res.json([2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025]);
-    }, 6000);
-  }
+  setTimeout(() => {
+    res.json([2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025]);
+  }, 6000);
+  //   j++;
+  //   if (j % 3 === 0) {
+  //     setTimeout(() => {
+  //       return res.status(409).send("error");
+  //     }, 500);
+  //   } else {
+  //     setTimeout(() => {
+  //       res.json([2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025]);
+  //     }, 6000);
+  //   }
 });
 
 app.get("/categories", (req, res) => {
-  s++;
-  if (s % 3 === 0) {
-    setTimeout(() => {
-      return res.status(409).send("error");
-    }, 1500);
-  } else {
-    setTimeout(() => {
-      res.json(["Other", "Drinks", "Bills", "Finance"]);
-    }, 1500);
-  }
+  //   s++;
+  setTimeout(() => {
+    res.json(["Other", "Drinks", "Bills", "Finance"]);
+  }, 1500);
+  //   if (s % 3 === 0) {
+  //     setTimeout(() => {
+  //       return res.status(409).send("error");
+  //     }, 1500);
+  //   } else {
+  //     setTimeout(() => {
+  //       res.json(["Other", "Drinks", "Bills", "Finance"]);
+  //     }, 1500);
+  //   }
 });
 
 app.post("/expense", (req, res) => {
+  if (!req.body.name) {
+    return res.status(400).send();
+  }
   data.push(req.body);
-  res.send("Success");
+
+  res.json({ message: "success" });
 });
 
 app.listen(3600, () => {
