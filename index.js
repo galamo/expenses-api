@@ -6,7 +6,7 @@ const app = express();
 let i = 0;
 let j = 0;
 let s = 0;
-const data = [
+let data = [
   { date: new Date(), amount: 250, name: "Buy Books", category: "Other" },
   {
     date: new Date(new Date().setFullYear(2022)),
@@ -92,6 +92,16 @@ app.post("/expense", (req, res) => {
   data.push(req.body);
 
   res.json({ message: "success" });
+});
+
+app.post("/delete-expense", (req, res) => {
+  if (!req.body.name) {
+    return res.status(400).send();
+  }
+  data = data.filter(
+    (item) => item.name.toLowerCase() !== req.body.name.toLowerCase()
+  );
+  res.json({ message: "deleted successfully" });
 });
 
 app.listen(3600, () => {
