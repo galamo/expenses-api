@@ -138,7 +138,9 @@ app.post("/register", (req, res) => {
       .send("missing email or password or firstName or lastName");
   }
   const currentUser = users.find(
-    (user) => user.email.toLowerCase() === req?.body?.email?.toLowerCase()
+    (user) =>
+      user.email.toLowerCase() === req?.body?.email?.toLowerCase() &&
+      user.password.toLowerCase() === req?.password?.email?.toLowerCase()
   );
 
   if (currentUser) {
