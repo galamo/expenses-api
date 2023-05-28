@@ -117,7 +117,9 @@ app.post("/login", (req, res) => {
     return res.status(400).send("missing email or password");
   }
   const currentUser = users.find(
-    (user) => user.email.toLowerCase() === req?.body?.email?.toLowerCase()
+    (user) =>
+      user.email.toLowerCase() === req?.body?.email?.toLowerCase() &&
+      user.password.toLowerCase() === req?.body?.password?.toLowerCase()
   );
   if (currentUser) {
     return res.json({ message: "login successfully" });
@@ -138,9 +140,7 @@ app.post("/register", (req, res) => {
       .send("missing email or password or firstName or lastName");
   }
   const currentUser = users.find(
-    (user) =>
-      user.email.toLowerCase() === req?.body?.email?.toLowerCase() &&
-      user.password.toLowerCase() === req?.password?.email?.toLowerCase()
+    (user) => user.email.toLowerCase() === req?.body?.email?.toLowerCase()
   );
 
   if (currentUser) {
