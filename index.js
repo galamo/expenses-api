@@ -6,6 +6,14 @@ const app = express();
 let i = 0;
 let j = 0;
 let s = 0;
+const users = [
+  {
+    email: "dev@gmail.com",
+    password: "dev1234",
+    firstName: "dev",
+    lastName: "rozental",
+  },
+];
 let data = [
   { date: new Date(), amount: 250, name: "Buy Books", category: "Other" },
   {
@@ -102,6 +110,43 @@ app.post("/delete-expense", (req, res) => {
     (item) => item.name.toLowerCase() !== req.body.name.toLowerCase()
   );
   res.json({ message: "deleted successfully" });
+});
+
+app.post("/login", (req, res) => {
+  if (!req.body.email || !req.body.password) {
+    return res.status(400).send("missing email or password");
+  }
+  const currentUser = users.find(
+    (user) => user.email.toLowerCase() === req?.body?.email?.toLowerCase()
+  );
+  if (currentUser) {
+    return res.json({ message: "login successfully" });
+  } else {
+    res.status(401).json({ message: "Unauthorized" });
+  }
+});
+
+app.post("/register", (req, res) => {
+  if (
+    !req.body.email ||
+    !req.body.password ||
+    !req.body.firstName ||
+    !req.body.lastName
+  ) {
+    return res
+      .status(400)
+      .send("missing email or password or firstName or lastName");
+  }
+  const currentUser = users.find(
+    (user) => user.email.toLowerCase() === req?.body?.email?.toLowerCase()
+  );
+
+  if (currentUser) {
+    return res.status(409).json({ message: "user already exist" });
+  } else {
+    users.push(req.body);
+    return res.json({ message: "register successfully" });
+  }
 });
 
 app.get("/expenses/stats", (req, res) => {
